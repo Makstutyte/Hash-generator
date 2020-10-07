@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <cmath>
+#include <bitset>
 
 void ar_tas_simboliukas(char& simbolis, char pirmas, char antras)
 {
@@ -69,6 +70,87 @@ std::string StrRotate(std::string& s, int nLeft)
     return before + after;
 }
 
+int makeEqualLength(std::string& a, std::string& b)
+{
+    int len_a = a.length();
+    int len_b = b.length();
+
+    int num_zeros = abs(len_a - len_b);
+
+    if (len_a < len_b)
+    {
+        for (int i = 0; i < num_zeros; i++)
+        {
+            a = '0' + a;
+        }
+        // Return len_b which is highest. 
+        // No need to proceed further! 
+        return len_b;
+    }
+    else
+    {
+        for (int i = 0; i < num_zeros; i++)
+        {
+            b = '0' + b;
+        }
+    }
+    // Return len_a which is greater or  
+    // equal to len_b 
+    return len_a;
+}
+
+
+std::string andOperationBitwise(std::string s1, std::string s2)
+{
+    // Make both strings of same length with the  
+    // maximum length of s1 & s2. 
+    int length = makeEqualLength(s1, s2);
+
+    // Initialize res as NULL string 
+    std::string res = "";
+
+    // We start from left to right as we have  
+    // made both strings of same length.  
+    for (int i = 0; i < length; i++)
+    {
+        // Convert s1[i] and s2[i] to int and perform  
+        // bitwise AND operation, append to "res" string 
+        res = res + (char)((s1[i] - '0' & s2[i] - '0') + '0');
+    }
+    return res;
+}
+
+std::string OR(std::string a_str, std::string b_str)
+{
+    const size_t N = 32;
+
+    std::bitset<N> a(a_str), b(b_str);
+    std::bitset<N> c = a | b;
+
+
+    std::string c_str = c.to_string();
+    // cout << c;
+    return c_str;
+}
+
+std::string NOT(std::string b_str)
+{
+    const size_t N = 32;
+    std::bitset<N> b(b_str);
+    std::bitset<N> c = ~b;
+
+    std::string c_str = c.to_string();
+    //cout << c_str;
+    return c_str;
+
+}
+
+struct aaaaaaaaaaa
+{
+    std::vector<std::string> block;
+};
+
+
 int main()
 {
     /*
@@ -91,10 +173,11 @@ int main()
 
     char* c = new char[k];
 
+    //std::cout << "kitas perkelimas i charrrrrrrrr " << std::endl;
     for (int i = 0; i < k; i++) {
         c[i] = txt[i];
         std::cout << c[i];
-    }
+    }//std::cout << "kitas perkelimas i charrrrrrrrr " << std::endl;
 
     std::cout << c << '\n';
 
@@ -129,18 +212,18 @@ int main()
     int length = dieve_padek.length();
 
     dieve_padek = dieve_padek + addtext2;
-   // std::cout << std::endl;
-  //  std::cout << "PRIDEDAME VIENETA I GALA" << std::endl;
-   // std::cout << dieve_padek << std::endl;
+    std::cout << std::endl;
+    std::cout << "PRIDEDAME VIENETA I GALA" << std::endl;
+    std::cout << dieve_padek << std::endl;
 
     while (dieve_padek.length() % 512 != 448)
     {
         dieve_padek += '0';
     }
 
-   /* std::cout << "64 BITAI" << std::endl;
+    std::cout << "64 BITAI" << std::endl;
     std::cout << std::endl;
-    std::cout << dieve_padek << std::endl;*/
+    std::cout << dieve_padek << std::endl;
 
     //  eight bit ascii code array
 
@@ -166,84 +249,124 @@ int main()
     std::cout << std::endl;
     std::cout << dieve_padek << std::endl;
     std::cout << dieve_padek.length() << std::endl;
+ 
+        int row=dieve_padek.length()/512;
+        int col = (dieve_padek.length() / 512) * (512 / 32);
 
-    int b = (dieve_padek.length() / 512) * (512 / 32);
-    std::vector<std::string> masyvas;
-    masyvas.reserve(b*32);
-    // std::string masyvas[b];
-    int p = 0;
-    int kiek_cia = 0;
-
-    for (unsigned i = 0; i < dieve_padek.length(); i += 512)
-    {
-        // b++
-        std::cout << dieve_padek.substr(i, 512) << std::endl;
-        std::cout << std::endl;
-        std::cout << b << std::endl;
-
-        for (unsigned j = 0; j < dieve_padek.length(); j += 32)
+        std::vector<aaaaaaaaaaa> aaaa;
+        int s = dieve_padek.length() / 512;
+         int kiek_cia=0;
+        for (int i = 0; i < s; i++)
         {
-            masyvas.push_back(dieve_padek.substr(j, 32));
-            std::cout << masyvas.at(p) << std::endl;
-            kiek_cia++;
-            p++; 
+            aaaaaaaaaaa tmp;
+            for (int j = 0; j < 512; j += 32)
+            {
+                kiek_cia++;
+                tmp.block.push_back(dieve_padek.substr(j, 32));
+            }
+            aaaa.push_back(tmp);
+            std::cout << aaaa[0].block[0]<<std::endl;
+            std::cout << aaaa[0].block[1] << std::endl;
+            std::cout << aaaa[0].block[2] << std::endl;
         }
-    }
-    dieve_padek.erase();
-
-    std::cout << kiek_cia << std::endl;
+        
+        std::cout <<kiek_cia<< std::endl;
 
     int opa = 0;
-    for (size_t i = 16; i <= 79; i++)
+    for (int i = 0; i < s; i++)
     {
-        opa++;
-        std::string& wordA = masyvas[i - 3];
-        std::string& wordB = masyvas[i - 8];
-        std::string& wordC = masyvas[i - 14];
-        std::string& wordD = masyvas[i - 16];
-       
-        std::string xorA = "";
-        std::string xorB = "";
-        std::string xorC = "";
-        
-                for(int j=0; j<32; j++)
-                {
+        for (size_t j = 16; j <= 79; j++)
+        {
+            opa++;
+            std::string& wordA = aaaa[i].block[j - 3];
+            std::string& wordB = aaaa[i].block[j - 8];
+            std::string& wordC = aaaa[i].block[j - 14];
+            std::string& wordD = aaaa[i].block[j - 16];
+            
+                    std::string xorA = xoring(wordA, wordB, 32);
+                    std::string xorB = xoring(xorA, wordC, 32);
+                    std::string xorC = xoring(xorB, wordD, 32);
 
-                    if(wordA[j]==wordB[j])
-                        xorA+="0";
-                        else
-                            xorA+="1";
-                }
+            std::string newWord = StrRotate(xorC, 1);
 
-                for(int k=0; k<32; k++)
-                {
+            aaaa[i].block.push_back(newWord);
+        }
 
-                    if(xorA[k]==wordC[k])
-                        xorB+="0";
-                        else
-                            xorB+="1";
-                }
-
-                for(int l=0; l<32; l++)
-                {
-
-                    if(xorB[l]==wordD[l])
-                        xorC+="0";
-                        else
-                            xorC+="1";
-                }
-                /*
-                std::string xorA = xoring(wordA, wordB, 32);
-                //string c = xoring(a, b, n)
-                std::string xorB = xoring(xorA, wordC, 32);
-                std::string xorC = xoring(xorB, wordD, 32);
-                */
-                std::string newWord = StrRotate(xorC, 1);
-
-                masyvas.push_back(newWord);
-
-                std::cout << masyvas.at(i) << std::endl;
+        std::cout << aaaa[0].block[79] << std::endl;
     }
+  //  std::cout << "kitas perkelimas i charrrrrrrrr " << std::endl;
+    std::cout << aaaa[0].block[79].size() << std::endl;
+
+    std::string h0 = "01100111010001010010001100000001";
+    std::string h1 = "11101111110011011010101110001001";
+    std::string h2 = "10011000101110101101110011111110";
+    std::string h3 = "00010000001100100101010001110110";
+    std::string h4 = "11000011110100101110000111110000";
+
+    std::string a1 = h0;
+    std::string b1 = h1;
+    std::string c1 = h2;
+    std::string d1 = h3;
+    std::string e1 = h4;
+
+    //žžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžž
+    /*
+    for (int i = 0; i < ; i++)
+    {
+        for (int j = 0; j < 80; j++)
+        {
+            std::string f;
+            std::string k;
+
+            if (j < 20)
+            {
+                std::string BandC = andOperationBitwise(b1, c1);
+                std::string notB = andOperationBitwise(NOT(b1), d1);;
+                f = OR(BandC, notB);
+                k = "01011010100000100111100110011001";
+            }
+
+            else if (j < 40) 
+            {
+                std::string BxorC = xoring(b1, c1, 32);
+                f = xoring(BxorC, d1, 32);
+                k = "01101110110110011110101110100001";
+            }
+
+            else if (j < 60) 
+            {
+                std::string BandC = andOperationBitwise(b1, c1);
+                std::string BandD = andOperationBitwise(b1, d1);
+                std::string CandD = andOperationBitwise(c1, d1);
+                std::string BandCorBandD = OR(BandC, BandD);
+                f = OR(BandCorBandD, CandD);
+                k = "10001111000110111011110011011100";
+            }
+
+            else 
+            {
+                std::string BxorC = xoring(b1, c1, 32);
+                f = xoring(BxorC, d1, 32);
+                k = "11001010011000101100000111010110";
+            }
+
+            std::string word = words80[i][j];
+            std::string tempA = utils.binaryAddition(StrRotate(a1, 5), f);
+            std::string tempB = utils.binaryAddition(tempA, e1);
+            std::string tempC = utils.binaryAddition(tempB, k);
+            std::string temp = utils.binaryAddition(tempC, word);
+
+            temp = utils.truncate(temp, 32);
+            e1 = d1;
+            d1 = c1;
+            c1 = StrRotate(b1, 30);
+            b1 = a1;
+            a1 = temp;
+
+        }
+    }*/
+    //žžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžžž
+
 
     return 0;
 
