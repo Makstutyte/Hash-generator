@@ -129,7 +129,8 @@ int main()
             for (int i = 0; txt[i] != '\0'; i++)
                 sum = sum + txt[i];
             
-            std::cout << std::hex << sum << std::endl;
+          //  std::cout << std::hex << sum << std::endl;
+         //   std::hex << sum;
             
         for (int i = 0; i < txt.length(); i++)
         {
@@ -155,7 +156,7 @@ int main()
                     {
                         a++;
                         //hash[j] = ((txt[i] ^ copy2[j]) * txt[i % txt.length() + a] * copy[j] + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % ilgis] * default_str4[j]) ^ (txt[a % txt.length()] * default_str3[31])) % 128;
-                         hash[j] = ((txt[i] ^ sum) + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % 64] * sum) ^ (txt[a % txt.length()] * default_str3[j])) % 128;
+                         hash[j] = ((txt[i] ^ sum) + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % 64] * sum) ^ (txt[a % txt.length()] * default_str3[j] * sum)) % 128;
                     }while (is_hex(hash[j]) != 1);
                 }
             }
@@ -171,7 +172,7 @@ int main()
 
 
 std::cout << std::endl;
-       // std::cout << StrRotate(hash, 50) << std::endl;
+       // 
      //  random_shuffle(hash.begin(), hash.end());
        std::cout << hash << std::endl;
        std::cout << std::endl;
@@ -184,6 +185,7 @@ std::cout << std::endl;
                     }while (is_hex(hash[j]) != 1);
             }
             std::cout << hash << std::endl;
+            std::cout << StrRotate(hash, 50) << std::endl;
     }
 
      if (txt.empty())
