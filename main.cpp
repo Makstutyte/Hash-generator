@@ -4,6 +4,8 @@
 #include <sstream>
 #include <cstring>
 #include <fstream>
+#include <algorithm>
+#include <chrono>
 
 void ar_tas_simboliukas(char& simbolis, char pirmas, char antras)
 {
@@ -60,20 +62,39 @@ bool is_hex(char text)
     return true;
 }
 
+
+class Timer 
+{
+    private:
+    std::chrono::time_point<std::chrono::high_resolution_clock> start;
+    public:
+    Timer() : start{std::chrono::high_resolution_clock::now()} {}
+    void reset() {
+    start = std::chrono::high_resolution_clock::now();
+    }
+    double elapsed() const {
+    return std::chrono::duration<double>
+    (std::chrono::high_resolution_clock::now() - start).count();
+    }
+};
+
 int main()
 {
     std::string result;
+    Timer t; // Paleisti
+
+    int ilgis  = 64;
     std::string default_str =   "gets is considered unsafeand has been removed from the latest Ca";
     std::string default_str2  = "Animacinis serialas apie geltonaja seimynele is Springfildo - Ho"; 
     std::string default_str3  = "Start by adding these lines of code into HelloWorld.cpp file. Th";
-    std::string default_str4  = "1.'/,;/.320.5105824??!!!!454589ddfghjh;'[#]ggh88414?;'@~;';g';gh';";
+    std::string default_str4  = "7854269854261586242357920045305983218410658942104638724822054564";
                                
-    std::string copy = default_str;
     std::string copy1 = StrRotate(default_str, 32);
     std::string copy2 = StrRotate(default_str2, 17);
     std::string copy3 = StrRotate(default_str3, 32);
     std::string copy4 = StrRotate(default_str4, 50);
     std::string hash = default_str;
+    
 
     char ir_kasgi_cia_bus;
 
@@ -83,19 +104,16 @@ int main()
     ar_tas_simboliukas(ir_kasgi_cia_bus, 'r', 'f');
     std::string txt;
 
-    //txt = "";
-
     if (ir_kasgi_cia_bus == 'r')
     {
-        std::cout << "tekstas ";
+        std::cout << "text ";
         std::cin >> txt;
-        //txt = "A Test";
     }
 
     else if (ir_kasgi_cia_bus == 'f')
     {
         std::string fileName;
-        std::cout << "File name (format without .txt ending):  ";
+        std::cout << "File name (format with .txt ending):  ";
         std::cin >> fileName;
 
         std::ifstream in(fileName);
@@ -104,45 +122,74 @@ int main()
         txt = a.str();
         in.close();
     }
-    
+
     if (!txt.empty())
     {
+        int  sum = 0;
+            for (int i = 0; txt[i] != '\0'; i++)
+                sum = sum + txt[i];
+            
+            std::cout << std::hex << sum << std::endl;
+            
         for (int i = 0; i < txt.length(); i++)
         {
-            for (int j = 0; j < 64; j++)
+            for (int j = 0; j < ilgis; j++)
             {
                 int a = 0;
                 int b = 1;
                 int c = 2;
 
                 if (j < 32)
-                {
-                    while (is_hex(hash[j]) != 1)
+                { 
+                    do
                     {
                         b++;
-                        hash[j] = (txt[i] * copy4[j] * (copy1[j] ^ copy2[j]) * default_str2[j] + b + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * copy1[j])) % 128;
-                    }
+                        //hash[j] = (txt[i] * copy4[j] * (copy1[j] ^ txt[i]) * default_str2[j] + b + (txt[b * i % ilgis] * txt[j % txt.length()]) ^ (txt[b % txt.length()] * copy1[j])) % 128;
+                         hash[j] = (txt[i] * copy4[j] * default_str2[j] + b + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
+                    }while (is_hex(hash[j]) != 1);
                 }
 
                 else
                 {
-                    while (is_hex(hash[j]) != 1)
+                    do
                     {
                         a++;
-                        hash[j] = ((copy1[j] ^ copy2[j]) * txt[i] * copy[j] + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % 64] * default_str4[j]) ^ (txt[a % txt.length()] * default_str3[j])) % 128;
-                    }
+                        //hash[j] = ((txt[i] ^ copy2[j]) * txt[i % txt.length() + a] * copy[j] + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % ilgis] * default_str4[j]) ^ (txt[a % txt.length()] * default_str3[31])) % 128;
+                         hash[j] = ((txt[i] ^ sum) + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % 64] * sum) ^ (txt[a % txt.length()] * default_str3[j])) % 128;
+                    }while (is_hex(hash[j]) != 1);
                 }
             }
         }
 
-        std::cout << StrRotate(hash, 50) << std::endl;
+/*
+            int  sum = 0;
+            for (int i = 0; txt[i] != '\0'; i++)
+                sum = sum + txt[i];
+            
+            std::cout << std::hex << sum << std::endl;
+*/
+
+
+std::cout << std::endl;
+       // std::cout << StrRotate(hash, 50) << std::endl;
+     //  random_shuffle(hash.begin(), hash.end());
+       std::cout << hash << std::endl;
+       std::cout << std::endl;
+
+            for (int j = 0; j < ilgis; j++)
+            {
+                    do
+                    {
+                        hash[j] = hash[j] ^ sum ^ sum;
+                    }while (is_hex(hash[j]) != 1);
+            }
+            std::cout << hash << std::endl;
     }
 
-    else if (txt.empty())
+     if (txt.empty())
         {
-            std::string hash = "";
             int a1 = 0;
-
+            std::string hash = "";
             for (int i = 0; i < 64; i++)
             {
                 int newsymb;
@@ -155,12 +202,13 @@ int main()
                 tmp3 = (tmp1 * a1) ^ (tmp2 * i) * 3 + (i * a1) & tmp2;
                 newsymb = (tmp3 * 4) ^ (default_str3[i] * a1);
                 hash += toHex(newsymb);
-
             }
 
             hash = hash.substr(3, 64);
             std::cout << StrRotate(hash, 50) << std::endl;
         }
+        std::cout << std::endl;
+        std::cout <<  t.elapsed() << " s\n";
 
     return 0;
 }
