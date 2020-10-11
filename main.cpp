@@ -78,31 +78,15 @@ class Timer
     }
 };
 
-int main()
+void skaitymas(std::string& txt)
 {
-    Timer t; // Paleisti
-
-    int ilgis  = 64;
-    std::string default_str =   "gets is considered unsafeand has been removed from the latest Ca";
-    std::string default_str2  = "Animacinis serialas apie geltonaja seimynele is Springfildo - Ho"; 
-    std::string default_str3  = "Start by adding these lines of code into HelloWorld.cpp file. Th";
-    std::string default_str4  = "7854269854261586242357920045305983218410658942104638724822054564";
-                               
-    std::string copy1 = StrRotate(default_str, 32);
-    std::string copy2 = StrRotate(default_str2, 17);
-    std::string copy3 = StrRotate(default_str3, 32);
-    std::string copy4 = StrRotate(default_str4, 50);
-    std::string hash = default_str;
-    
-
     char ir_kasgi_cia_bus;
 
     std::cout << "ivedam rankyte (r) ar sakitome is failiuko (f)? ";
     std::cin >> ir_kasgi_cia_bus;
 
     ar_tas_simboliukas(ir_kasgi_cia_bus, 'r', 'f');
-    std::string txt;
-
+    
     if (ir_kasgi_cia_bus == 'r')
     {
         std::cout << "text ";
@@ -114,7 +98,6 @@ int main()
         std::string fileName;
         std::cout << "File name (format with .txt ending):  ";
         std::cin >> fileName;
-
         std::ifstream in(fileName);
         std::stringstream a;
         a << in.rdbuf();
@@ -122,6 +105,25 @@ int main()
         in.close();
     }
 
+//    return txt;
+};
+
+void hash (std::string& txt)
+{
+    skaitymas(txt);
+
+    int ilgis  = 64;
+    std::string default_str =   "gets is considered unsafeand has been removed from the latest Ca";
+    std::string default_str2  = "Animacinis serialas apie geltonaja seimynele is Springfildo - Ho"; 
+    std::string default_str3  = "Start by adding these lines of code into HelloWorld.cpp file. Th";
+    std::string default_str4  = "78542695qwg15862423 Hash'avimo metu bet koks92104638724822loph64";
+                               
+    std::string copy1 = StrRotate(default_str, 32);
+    std::string copy2 = StrRotate(default_str2, 17);
+    std::string copy3 = StrRotate(default_str3, 32);
+    std::string copy4 = StrRotate(default_str4, 50);
+    std::string hash = default_str;
+    
     if (!txt.empty())
     {
         int  sum = 0;
@@ -144,6 +146,7 @@ int main()
                     {
                         b++;
                         //hash[j] = (txt[i] * copy4[j] * (copy1[j] ^ txt[i]) * default_str2[j] + b + (txt[b * i % ilgis] * txt[j % txt.length()]) ^ (txt[b % txt.length()] * copy1[j])) % 128;
+                        // hash[j] = (txt[i] * (sum * copy4[j]) * default_str2[j] + b * sum + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
                          hash[j] = (txt[i] * copy4[j] * default_str2[j] + b * sum + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
                     }while (is_hex(hash[j]) != 1);
                 }
@@ -155,14 +158,13 @@ int main()
                         a++;
                         //hash[j] = ((txt[i] ^ copy2[j]) * txt[i % txt.length() + a] * copy[j] + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % ilgis] * default_str4[j]) ^ (txt[a % txt.length()] * default_str3[31])) % 128;
                         // hash[j] = ((txt[i] ^ sum) + txt[i * a % txt.length()] * sum * default_str4[j] + a * sum + (copy2[a * i % 64]) * default_str3[j] * sum) % 128;
-                         hash[j] = (txt[i] * sum*sum * default_str3[j] + a * sum + (txt[a * i % 64] * default_str4[j]) ^ (txt[a % txt.length()] * (sum*sum))) % 128;
+                         hash[j] = (txt[i] * sum*sum * default_str3[j] * sum + a * sum + (txt[a * i % 64] * default_str4[j] * sum) ^ (txt[a % txt.length()] * (sum*sum*sum))) % 128;
                     }while (is_hex(hash[j]) != 1);
                 }
             }
         }
 
-std::cout << std::endl;
-
+            std::cout << std::endl;
             std::cout << hash << std::endl;
     }
 
@@ -188,7 +190,14 @@ std::cout << std::endl;
             std::cout << StrRotate(hash, 50) << std::endl;
         }
         std::cout << std::endl;
-        std::cout <<  t.elapsed() << " s\n";
+};
+
+int main()
+{
+    Timer t; // Paleisti
+    std::string txt;
+    hash(txt);
+    std::cout <<  t.elapsed() << " s\n";
 
     return 0;
 }
