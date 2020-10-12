@@ -7,15 +7,15 @@
 #include <algorithm>
 #include <chrono>
 
-void ar_tas_simboliukas(char& simbolis, char pirmas, char antras)
+void symbol(char& symbol, char first, char second)
 {
-    while (!(simbolis == pirmas || simbolis == antras))
+    while (!(symbol == first || symbol == second))
     {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Ivestas netinkamas dydis" << std::endl;
-        std::cout << "Pasirinkite viena is variantu arba " << pirmas << " arba " << antras << ": ";
-        std::cin >> simbolis;
+        std::cout<<"Invalid size entered" <<std::endl;
+        std::cout << "Choose between the options  " << first << " or " << second << ": ";
+        std::cin >> symbol;
     }
 }
 
@@ -62,7 +62,6 @@ bool is_hex(char text)
     return true;
 }
 
-
 class Timer 
 {
     private:
@@ -78,22 +77,23 @@ class Timer
     }
 };
 
-void skaitymas(std::string& txt)
+void read(std::string& txt)
 {
-    char ir_kasgi_cia_bus;
+    char hand_or_file;
 
-    std::cout << "ivedam rankyte (r) ar sakitome is failiuko (f)? ";
-    std::cin >> ir_kasgi_cia_bus;
+    std::cout << "input by hand (h) or input by choosen file (f)? ";
+    std::cin >> hand_or_file;
 
-    ar_tas_simboliukas(ir_kasgi_cia_bus, 'r', 'f');
+    symbol(hand_or_file, 'r', 'f');
     
-    if (ir_kasgi_cia_bus == 'r')
+
+    if (hand_or_file == 'r')
     {
         std::cout << "text ";
         std::cin >> txt;
     }
 
-    else if (ir_kasgi_cia_bus == 'f')
+    else if (hand_or_file == 'f')
     {
         std::string fileName;
         std::cout << "File name (format with .txt ending):  ";
@@ -104,15 +104,13 @@ void skaitymas(std::string& txt)
         txt = a.str();
         in.close();
     }
-
-//    return txt;
 };
 
 void hash (std::string& txt)
 {
-    skaitymas(txt);
+    read(txt);
 
-    int ilgis  = 64;
+    int lenght  = 64;
     std::string default_str =   "gets is considered unsafeand has been removed from the latest Ca";
     std::string default_str2  = "Animacinis serialas apie geltonaja seimynele is Springfildo - Ho"; 
     std::string default_str3  = "Start by adding these lines of code into HelloWorld.cpp file. Th";
@@ -124,17 +122,18 @@ void hash (std::string& txt)
     std::string copy4 = StrRotate(default_str4, 50);
     std::string hash = default_str;
     
+
     if (!txt.empty())
     {
         int  sum = 0;
             for (int i = 0; txt[i] != '\0'; i++)
                 sum = sum + txt[i];
             
-            std::cout << std::hex << sum << std::endl;
+           // std::cout << std::hex << sum << std::endl;
             
         for (int i = 0; i < txt.length(); i++)
         {
-            for (int j = 0; j < ilgis; j++)
+            for (int j = 0; j < lenght; j++)
             {
                 int a = 0;
                 int b = 1;
@@ -145,9 +144,7 @@ void hash (std::string& txt)
                     do
                     {
                         b++;
-                        //hash[j] = (txt[i] * copy4[j] * (copy1[j] ^ txt[i]) * default_str2[j] + b + (txt[b * i % ilgis] * txt[j % txt.length()]) ^ (txt[b % txt.length()] * copy1[j])) % 128;
-                        // hash[j] = (txt[i] * (sum * copy4[j]) * default_str2[j] + b * sum + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
-                         hash[j] = (txt[i] * copy4[j] * default_str2[j] + b * sum + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
+                        hash[j] = (txt[i] * copy4[j] * default_str2[j] + b * sum + (txt[b * i % 64] * default_str[j]) ^ (txt[b % txt.length()] * sum)) % 128;
                     }while (is_hex(hash[j]) != 1);
                 }
 
@@ -156,9 +153,7 @@ void hash (std::string& txt)
                     do
                     {
                         a++;
-                        //hash[j] = ((txt[i] ^ copy2[j]) * txt[i % txt.length() + a] * copy[j] + txt[i * a % txt.length()] * default_str4[j] + a + (copy2[a * i % ilgis] * default_str4[j]) ^ (txt[a % txt.length()] * default_str3[31])) % 128;
-                        // hash[j] = ((txt[i] ^ sum) + txt[i * a % txt.length()] * sum * default_str4[j] + a * sum + (copy2[a * i % 64]) * default_str3[j] * sum) % 128;
-                         hash[j] = (txt[i] * sum*sum * default_str3[j] * sum + a * sum + (txt[a * i % 64] * default_str4[j] * sum) ^ (txt[a % txt.length()] * (sum*sum*sum))) % 128;
+                        hash[j] = (txt[i] * sum*sum * default_str3[j] * sum + a * sum + (txt[a * i % 64] * default_str4[j] * sum) ^ (txt[a % txt.length()] * (sum*sum*sum))) % 128;
                     }while (is_hex(hash[j]) != 1);
                 }
             }
