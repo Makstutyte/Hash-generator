@@ -39,3 +39,21 @@ This was done purely for the sake of curiosity, it doesn't improve the performan
 * Collision resistance - it is practically impossible to find such two different arguments to get them the same hash
 * Any changes in the given inpit string should provide mostly different hash value
 
+### Experimental research-analysis
+1. Written program was tested with different input files
+  * two files consisting of only one, but different, character
+ 
+| .txt file | Time | Hash |
+| --------------- | --------------- | --------------- |
+| 1a.txt| 4.30449s | c9fd649a3213d093da8d03dc2acfa8d168ad1733d82d2bdd3e9dce1dcd86dddc |
+| 1b.txt | 4.32255s | b02f440b04dd040d2b40268b2bb2b486fb6d02b6df2f62fd60fdfffdd46fddff |
+
+
+ * two files consisting of many (> 1000) randomly generated characters
+ 
+ | .txt file | Amount of symbols |Time | Hash |
+| --------------- |  --------------- |--------------- | --------------- |
+| random1.txt| 1001 | 0.068833s | a27fede001205cfa91856a2d45310b188f6696a825240abd3bc5844fa08bb2f9 |
+| random2.xt | 1101 | 0.087909s | eb273d45456e0e10bd2b98d32c0d98e07f1fca9e580296f3c5406081f879bd43 |
+
+
