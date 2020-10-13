@@ -73,8 +73,36 @@ This was done purely for the sake of curiosity, it doesn't improve the performan
 * the written program corresponds with the quality that it is capable to hash a string of any given length
 * that the output of the hash function is always the result of the same fixed size (64 characters)
 * the hash function is deterministic, for the same input - the output is always the same.
-3. 
+3. Hashing file *konstitucija.txt
 | .txt file | Time | Hash |
 | --------------- | --------------- | --------------- |
 | konstitucija.txt| 3.65642s | 185a79c001e69821a118876a9b79eec501f7e2da96d6b6b353e4310de90e171c |
 | konstitucija.txt (changes in the end of the file konstitucija.txt by changing two letters into an uppercase ones)| 3.70872s | 2e6dfa1e967393782a889f6e926799c4ea13aed18ed7e6a320d36828efcd45aa |
+
+Hashing file *konstitucija.txt* line by line 
+| .txt file | Time |
+| --------------- | --------------- |
+| konstitucija.txt| 35.8776s |
+
+4. Collision resistsance analysis
+
+| Amount of symbols | Repeats | 
+| --------------- | --------------- | 
+| 10 | 0 | 
+| 100 | 250 | 
+| 500 |     |
+| 1000 |    |
+
+ ^ generuojant didelius string (nuo 100 elementu) random teksto generavimo funkcija kazkodel pradeda generuoti vienodus tekstus
+ 
+ | Amount of symbols | Repeats | 
+| --------------- | --------------- | 
+| 5 | 0 | 
+| 7 | 0 | 
+| 10 | 0 | 
+| 15 | 0 |
+| 20 | 0 |
+| 25 | 0 |
+| 30 | 0 |
+| 40 | 0 |
+| 100 | 250 | 
