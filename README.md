@@ -86,24 +86,23 @@ Hashing file *konstitucija.txt* line by line
 | konstitucija.txt| 35.8776s |
 
 4. Collision resistsance analysis
-
-| Amount of symbols | Repeats | 
-| --------------- | --------------- | 
-| 10 | 0 | 
-| 100 | 250 | 
-| 500 |     |
-| 1000 |    |
-
- ^ generuojant didelius string (nuo 100 elementu) random teksto generavimo funkcija kazkodel pradeda generuoti vienodus tekstus
  
- | Amount of symbols | Repeats | 
-| --------------- | --------------- | 
-| 5 | 0 | 
-| 7 | 0 | 
-| 10 | 0 | 
-| 15 | 0 |
-| 20 | 0 |
-| 25 | 0 |
-| 30 | 0 |
-| 40 | 0 |
-| 100 | 250 | 
+ | Amount of symbols | Repeats | Strings generated |
+| --------------- | --------------- | --------------- |
+| 5 | 0 | 25000 |
+| 7 | 0 | 25000 |
+| 10 | 0 | 25000 | 
+| 20 | 0 | 25000 |
+| 40 | 0 | 25000 |
+| 80 | 0 | 25000 |
+| 150 | 0 | 25000 |
+| 300 | 0 | 25000 |
+| 500 | 0 | 25000 |
+| 1000 | 0 | 25000 |
+PAVYKOOOOO :)
+5.
+6.
+
+### Conclusion
+The written hash function is far from perfect:
+* when generating hash from short input (for example a string from just one symbol) it  
