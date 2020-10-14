@@ -89,19 +89,36 @@ Hashing file *konstitucija.txt* line by line
  
  | Amount of symbols | Repeats | Strings generated |
 | --------------- | --------------- | --------------- |
+| 5 | 0 | 250 |
+| 5 | 0 | 2500 |
 | 5 | 0 | 25000 |
+| 7 | 0 | 250 |
+| 7 | 0 | 2500 |
 | 7 | 0 | 25000 |
+| 10 | 0 | 250 |
+| 10 | 0 | 2500 |
 | 10 | 0 | 25000 | 
+| 10 | 0 | 50000 | 
+| 20 | 0 | 250 |
+| 20 | 0 | 2500 |
 | 20 | 0 | 25000 |
-| 40 | 0 | 25000 |
-| 80 | 0 | 25000 |
-| 150 | 0 | 25000 |
-| 300 | 0 | 25000 |
-| 500 | 0 | 25000 |
-| 1000 | 0 | 25000 |
-PAVYKOOOOO :)
+
+kode bugas, kuris neleidzia kodui prasisukti (jis kiekviena karta testuojant pasitaiko vis kitoje vietoje)
+nepavyko
+
 5.
 6.
+ | Amount of symbols | Repeats | Percentage difference |
+| --------------- | --------------- | --------------- |
+| 5 | 0 | |
+| 10 | 0 | | 
+| 20 | 0 |  |
+| 40 | 0 |  |
+| 80 | 0 |  |
+| 150 | 0 | |
+| 300 | 0 |  |
+| 500 | 0 |  |
+| 1000 | 0 | |
 
 ### Conclusion
 The written hash function is far from perfect:
