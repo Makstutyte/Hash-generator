@@ -33,13 +33,13 @@ To run the program code you need:
 ### The program works in the following steps:
 * accepts string input of any length
   * the user is given a possibility to choose wether to enter input by hand or to read from a choosen text file 
-  * in case of text file the inside content is read line by line
+  * in case of text file, the inside content is read line by line
 * hash function calculations are performed using 4 default strings (hash calculations are performed by stimulating all 4 default strings) and ASCII code sum of the whole input file
   * all four strings are fixed lenght - 64 symbols
   * one of the provided strings is set to be the hash value
   * the hash value (which is to be the final answer) is runned trough two *for* loops - one of the size is the actuall input lenght, the other of the size of 64 (we are generating hash of the lenght of 64)
   * while running through two *for* loops every yet to be hash element is calculated by performing *addition*, *multiplication* and *exclusive or logical operations*. All of these calculations are then runned through modulus calculation in order to returns the division remainder, which is then written in the appropriate hash position - it is going to be the final hash element
-  * the mention step is performed until the specific hash element is equal to one of the 16 hexidecimal values
+  * the mentioned step is performed until the specific hash element is equal to one of the 16 hexidecimal values
 * the calculated hash value is outputed
 
 #### If the input string is empty:
@@ -136,7 +136,7 @@ However the program was not tested with long input strings, therefore it is not 
 
 Binary level 
 
- | Amount of symbols | Strings generated | Average ercentage difference | Minimal ercentage difference |Maximum percentage difference |
+ | Amount of symbols | Strings generated | Average percentage difference | Minimal percentage difference |Maximum percentage difference |
 | --------------- | --------------- | --------------- | --------------- | --------------- |
 | 5 | 250 | 52% | 52% | 53% |
 | 5 | 2500 |  48% | 53% | 39% |
@@ -153,9 +153,14 @@ Binary level
 | 35 | 2500 | 42% | 38% | 49% |
 | 35 | 25000 | 40% | 33% | 44% |
 
+when generated 25000 strings:
+* common avarage percentage difference is → 41%
+* common minimal percentage difference is → 35%
+* common maximum percentage difference is → 45%
+
 
 Hexidecimal level
- | Amount of symbols | Strings generated | Average ercentage difference | Minimal ercentage difference |Maximum percentage difference |
+ | Amount of symbols | Strings generated | Average percentage difference | Minimal percentage difference | Maximum percentage difference |
 | --------------- | --------------- | --------------- | --------------- | --------------- |
 | 5 | 250 | 89% | 84% | 96% |
 | 5 | 2500 | 95% | 90%| 96% |
@@ -172,10 +177,22 @@ Hexidecimal level
 | 35 | 2500 | 68% | 54% | 72% |
 | 35 | 25000 | 73% | 71% | 75% |
 
+when generated 25000 strings:
+* common avarage percentage difference is → 79%
+* common minimal percentage difference is → 70%
+* common maximum percentage difference is → 79%
+
 ### Conclusion
 Strengths:
-* Written program is quite fast when generating hash from big inputs (npt while performing collision tests)
+* Written program is quite fast when generating hash from big inputs (not while performing collision tests)
 
 Weaknesses:
 * Written code has a bug that does not allow to test it to the fullest. The bug occurs when testing for collision resistance. When testing code while running it through a for loop which ensures that random string is generated and stilmuntaniosly hashed - the code breaks while hashing generated string. This bug heppens in different possitions or may not at all. Therefore the performed collision testing is not detaled enough.
 * When generating hash from short input (for example a string from just one symbol) it might take longer to calculate the hash than when doing the same with rather long one.  
+
+### Over all conclusion
+* Program generates fixed lenght hash (no matter the input size)
+* Program is deterministic - for the same input, the output is always the same
+* The code is partly efficiency - the hash for any input value is calculated quickly
+* Proram generates irreversible hash - from the result of the hash function it is practically impossible to reproduce the initial input
+* From the performed tests the code generated collision resistant hash, however there are not enough proof for this quality to be ensured
