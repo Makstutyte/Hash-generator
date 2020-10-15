@@ -3,6 +3,29 @@
 Hash function version v0.2, 
 program written in C++ 
 
+## Installation instructions
+To run the program code you need:
+
+1. Download the program code
+2. Install the C ++ compiler
+ <br />[GCC](https://gcc.gnu.org/)
+3. Find the location of the program code (directory) using the command line
+
+### If using Makefile:
+
+4. Compile program code using
+   <br /> `make` 
+5. Run the program code using
+   <br /> `test` 
+   
+### If not using Makefile:
+
+4. Compile program code using
+   <br /> `g++ -c main.cpp` 
+   <br /> `g++ -o test main.o` 
+5. Run the program code using
+   <br /> `test` 
+
 ### The written program performs the following actions:
 * accepts string input of any length
 * performs hashing operation to convert given string input of any length into a fixed length hash
@@ -97,29 +120,62 @@ Hashing file *konstitucija.txt* line by line
 | 7 | 0 | 25000 |
 | 10 | 0 | 250 |
 | 10 | 0 | 2500 |
+| 10 | 0 | 10000 |
 | 10 | 0 | 25000 | 
 | 10 | 0 | 50000 | 
 | 20 | 0 | 250 |
 | 20 | 0 | 2500 |
 | 20 | 0 | 25000 |
 
-kode bugas, kuris neleidzia kodui prasisukti (jis kiekviena karta testuojant pasitaiko vis kitoje vietoje)
-nepavyko
+5. The above information and examples show that:
+* no collision occurred while testing collision resistance with generated strings of short length 
 
-5.
-6.
- | Amount of symbols | Repeats | Percentage difference |
-| --------------- | --------------- | --------------- |
-| 5 | 0 | |
-| 10 | 0 | | 
-| 20 | 0 |  |
-| 40 | 0 |  |
-| 80 | 0 |  |
-| 150 | 0 | |
-| 300 | 0 |  |
-| 500 | 0 |  |
-| 1000 | 0 | |
+However the program was not tested with long input strings, therefore it is not correct to assume that code always generates unique hashes for different inputs.
+
+6. The percentage difference of the hashes
+
+Binary level 
+
+ | Amount of symbols | Strings generated | Average ercentage difference | Minimal ercentage difference |Maximum percentage difference |
+| --------------- | --------------- | --------------- | --------------- | --------------- |
+| 5 | 250 | 52% | 52% | 53% |
+| 5 | 2500 |  48% | 53% | 39% |
+| 7 | 250 | 52% | 52% | 53% |
+| 7 | 2500 | 49% | 47% | 53% |
+| 7 | 25000 | 51% | 44% | 53% |
+| 10 | 250 | 47% | 46% | 50% |
+| 10 | 2500 | 44% | 42% | 49% |
+| 15 | 250 | 47%  | 39% | 51% |
+| 15 | 2500 | 41% | 36% | 44% |
+| 20 | 250 | 39% | 37% | 41% |
+| 20 | 2500 | 39%  | 32% | 45% |
+| 30 | 25000 | 32% | 29% | 37% |
+| 35 | 2500 | 42% | 38% | 49% |
+| 35 | 25000 | 40% | 33% | 44% |
+
+
+Hexidecimal level
+ | Amount of symbols | Strings generated | Average ercentage difference | Minimal ercentage difference |Maximum percentage difference |
+| --------------- | --------------- | --------------- | --------------- | --------------- |
+| 5 | 250 | 89% | 84% | 96% |
+| 5 | 2500 | 95% | 90%| 96% |
+| 7 | 250 | 90% | 90% | 92% |
+| 7 | 2500 | 89% | 85% | 96% |
+| 7 | 25000 | 94% | 83% | 94% |
+| 10 | 250 | 87% | 81% | 88% | 
+| 10 | 2500 | 89% | 84% |95% |
+| 15 | 250 | 85%  | 79% | 85% |
+| 15 | 2500 | 80% | 80% | 87% |
+| 20 | 250 | 78% | 73% | 84% |
+| 20 | 2500 | 82%  | 72% | 89% |
+| 30 | 25000 | 69% | 56% | 69% |
+| 35 | 2500 | 68% | 54% | 72% |
+| 35 | 25000 | 73% | 71% | 75% |
 
 ### Conclusion
-The written hash function is far from perfect:
-* when generating hash from short input (for example a string from just one symbol) it  
+Strengths:
+* Written program is quite fast when generating hash from big inputs (npt while performing collision tests)
+
+Weaknesses:
+* Written code has a bug that does not allow to test it to the fullest. The bug occurs when testing for collision resistance. When testing code while running it through a for loop which ensures that random string is generated and stilmuntaniosly hashed - the code breaks while hashing generated string. This bug heppens in different possitions or may not at all. Therefore the performed collision testing is not detaled enough.
+* When generating hash from short input (for example a string from just one symbol) it might take longer to calculate the hash than when doing the same with rather long one.  
